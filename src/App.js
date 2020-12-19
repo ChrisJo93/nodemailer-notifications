@@ -4,7 +4,20 @@ import axios from 'axios';
 class App extends Component {
   state = {
     email: '',
+    sendMail: false,
+    thursdayCounter: 0,
   };
+
+  // Use a counter for number of thursdays. Every 1 thursday, send the email. Every 2 thursday set "send email" to false.
+
+  componentDidMount() {
+    if (new Date().getDay() === 6) {
+      this.setState({
+        thursdayCounter: (this.state.thursdayCounter += 1),
+      });
+    }
+  }
+
   test = (event) => {
     axios
       .post('/send')
@@ -38,6 +51,12 @@ class App extends Component {
     );
   };
 
+  addone = (event) => {
+    this.setState({
+      thursdayCounter: this.state.thursdayCounter + 1,
+    });
+  };
+
   render() {
     return (
       <div className="App">
@@ -47,8 +66,16 @@ class App extends Component {
           type="text"
           placeholder="add email"
         />
+        <p>{new Date().getDay().toString()}</p>
+        <p>
+          Send mail today? {''} {this.state.sendMail.toString()}
+        </p>
+        <p>
+          Off Week? {''} {this.state.thursdayCounter}
+        </p>
         <button onClick={this.test}>Here you go</button>
         <button onClick={this.test2}>Here you go2</button>
+        <button onClick={this.addone}>Here you go3</button>
       </div>
     );
   }
