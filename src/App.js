@@ -1,19 +1,10 @@
 import React, { Component } from 'react';
-import HeaderComponent from './Components/HeaderComponent/HeaderComponent';
-import NavComponent from './Components/NavComponent';
-import MainPageComponent from './Components/MainPageComponent';
-import FooterComponent from './Components/FooterComponent';
 import axios from 'axios';
 
 class App extends Component {
   state = {
-    email: {
-      name: 'Ayo pimp',
-      email: 'Johnny.C.Alexander@gmail.com',
-      message: 'Ayo pimp!!!',
-    },
+    email: '',
   };
-
   test = (event) => {
     axios
       .post('/send')
@@ -25,14 +16,39 @@ class App extends Component {
       });
   };
 
+  test2 = (event) => {
+    axios
+      .post('/send/add', this.state.email)
+      .then((response) => {
+        console.log('im a fucking boss', response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  handleInputChangeFor = (propertyName) => (event) => {
+    this.setState(
+      {
+        [propertyName]: [event.target.value],
+      },
+      () => {
+        console.log(this.state.email);
+      }
+    );
+  };
+
   render() {
     return (
       <div className="App">
-        <HeaderComponent />
-        <NavComponent />
+        <input
+          onChange={this.handleInputChangeFor('email')}
+          value={this.state.email}
+          type="text"
+          placeholder="add email"
+        />
         <button onClick={this.test}>Here you go</button>
-        <MainPageComponent />
-        <FooterComponent />
+        <button onClick={this.test2}>Here you go2</button>
       </div>
     );
   }
