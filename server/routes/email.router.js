@@ -3,10 +3,10 @@ const nodemailer = require('nodemailer');
 const router = express.Router();
 
 let mailList = ['waywardtechbot@gmail.com'];
-let thursdayCounter = '0';
+let thursdayCounter = 0;
 
 router.get('/', (req, res) => {
-  res.send(parseInt(thursdayCounter));
+  res.send(thursdayCounter.toString());
   console.log('testing', thursdayCounter);
 });
 
