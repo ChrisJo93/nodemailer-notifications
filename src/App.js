@@ -11,11 +11,17 @@ class App extends Component {
   // Use a counter for number of thursdays. Every 1 thursday, send the email. Every 2 thursday set "send email" to false.
 
   componentDidMount() {
-    if (new Date().getDay() === 6) {
-      this.setState({
-        thursdayCounter: (this.state.thursdayCounter += 1),
-      });
+    if (new Date().getDay() === 0) {
+      axios.post('/send/counter');
     }
+    axios
+      .get('/send')
+      .then((response) => {
+        console.log('in cient get', response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   sendEmail = (event) => {

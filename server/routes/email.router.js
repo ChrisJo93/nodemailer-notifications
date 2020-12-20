@@ -3,7 +3,16 @@ const nodemailer = require('nodemailer');
 const router = express.Router();
 
 let mailList = ['waywardtechbot@gmail.com'];
-let thursdayCounter = 0;
+let thursdayCounter = '0';
+
+router.get('/', (req, res) => {
+  res.send(parseInt(thursdayCounter));
+  console.log('testing', thursdayCounter);
+});
+
+router.post('/counter', (req, res) => {
+  thursdayCounter = thursdayCounter += 1;
+});
 
 router.post('/add', (req, res) => {
   mailList.push(req.body);
@@ -20,17 +29,19 @@ router.post('/', (req, res) => {
     },
   };
   let transporter = nodemailer.createTransport(transportConfig);
-  let registerLink = 'http://localhost:3000';
+  let zoomLink = process.env.ZOOM;
+
   const mailOptions = {
     from: process.env.EMAIL,
     to: mailList,
-    subject: 'Testing Mailer Bot',
+    subject: 'Wayward Meetup',
     html: `<div>
-    <h1>Welcome to the Rodeo</h1>
-    <p>Nicely Done On Setting This Up! Now, we need to configure it to where it sends an email on a certain time and day every other week.</p>
-    <a href="${registerLink}" target="_blank">Back To Dev Space</a>
+    <h1>Friendly Reminder!</h1>
+    <p>Don't forget to join us for the Wayward Meetup! Click the link below for the zoom session.</p>
+    <a href="${zoomLink}" target="_blank">Back To Dev Space</a>
     </div>`,
   };
+
   transporter.sendMail(mailOptions, (err, res) => {
     if (err) {
       console.error('there was an error: ', err);
