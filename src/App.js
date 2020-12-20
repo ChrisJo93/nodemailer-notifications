@@ -18,7 +18,7 @@ class App extends Component {
     }
   }
 
-  test = (event) => {
+  sendEmail = (event) => {
     axios
       .post('/send')
       .then((response) => {
@@ -29,7 +29,7 @@ class App extends Component {
       });
   };
 
-  test2 = (event) => {
+  addEmail = (event) => {
     axios
       .post('/send/add', this.state.email)
       .then((response) => {
@@ -38,6 +38,14 @@ class App extends Component {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  addThursdayCounter = (event) => {
+    this.setState({ thursdayCounter: this.state.thursdayCounter + 1 });
+  };
+
+  resetCounter = (event) => {
+    this.setState({ thursdayCounter: 0 });
   };
 
   handleInputChangeFor = (propertyName) => (event) => {
@@ -49,12 +57,6 @@ class App extends Component {
         console.log(this.state.email);
       }
     );
-  };
-
-  addone = (event) => {
-    this.setState({
-      thursdayCounter: this.state.thursdayCounter + 1,
-    });
   };
 
   render() {
@@ -71,11 +73,12 @@ class App extends Component {
           Send mail today? {''} {this.state.sendMail.toString()}
         </p>
         <p>
-          Off Week? {''} {this.state.thursdayCounter}
+          Thursday Counter {''} {this.state.thursdayCounter}
         </p>
-        <button onClick={this.test}>Here you go</button>
-        <button onClick={this.test2}>Here you go2</button>
-        <button onClick={this.addone}>Here you go3</button>
+        <button onClick={this.sendEmail}>Send Email</button>
+        <button onClick={this.addEmail}>Add Email</button>
+        <button onClick={this.addThursdayCounter}>Add Counter</button>
+        <button onClick={this.resetCounter}>Reset</button>
       </div>
     );
   }

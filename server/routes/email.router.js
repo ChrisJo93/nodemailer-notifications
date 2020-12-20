@@ -3,6 +3,7 @@ const nodemailer = require('nodemailer');
 const router = express.Router();
 
 let mailList = ['waywardtechbot@gmail.com'];
+let thursdayCounter = 0;
 
 router.post('/add', (req, res) => {
   mailList.push(req.body);
@@ -24,11 +25,6 @@ router.post('/', (req, res) => {
     from: process.env.EMAIL,
     to: mailList,
     subject: 'Testing Mailer Bot',
-    icalEvent: {
-      filename: 'meetup.ics',
-      method: 'request',
-      content: 'January 1st 2021',
-    },
     html: `<div>
     <h1>Welcome to the Rodeo</h1>
     <p>Nicely Done On Setting This Up! Now, we need to configure it to where it sends an email on a certain time and day every other week.</p>
