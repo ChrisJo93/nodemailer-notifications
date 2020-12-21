@@ -25,7 +25,7 @@ function sendEmail() {
   };
   let transporter = nodemailer.createTransport(transportConfig);
   let zoomLink = process.env.ZOOM;
-  //actual email that is sent
+  //actual email being sent
   const mailOptions = {
     from: process.env.EMAIL,
     to: 'waywardtechbot@gmail.com',
@@ -45,7 +45,9 @@ function sendEmail() {
     }
   });
 }
-if (Date.parse(new Date(2020, 2, 2)) > new Date()) {
+if (Date.parse(new Date()) >= Date.parse(new Date(2021, 0, 14))) {
+  //-----------------------CHANGE THIS TO CORRECT START DATE
+  //Checking current date to first wayward meeting of 2021
   console.log(Date.parse(new Date(2020, 1, 2)));
   setInterval(sendEmail, 2000);
 }
