@@ -15,7 +15,7 @@ app.use(express.static('build'));
 const emailRouter = require('./routes/email.router.js');
 app.use('/send', emailRouter);
 
-function thinkingTooHard() {
+function sendEmail() {
   const transportConfig = {
     service: 'gmail',
     auth: {
@@ -45,6 +45,7 @@ function thinkingTooHard() {
     }
   });
 }
+// setInterval(sendEmail, 2000);
 
 //**----------Start Server---------**//
 app.listen(PORT, () => {
