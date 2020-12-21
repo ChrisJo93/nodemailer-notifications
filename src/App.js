@@ -5,19 +5,19 @@ class App extends Component {
   state = {
     email: '',
     sendMail: false,
-    thursdayCounter: 0,
   };
 
-  // Use a counter for number of thursdays. Every 1 thursday, send the email. Every 2 thursday set "send email" to false.
-
   componentDidMount() {
-    if (new Date().getDay() === 0) {
-      axios.post('/send/counter');
-    }
+    // if (new Date().getDay() === 0) {
+    //   axios.post('/send/counter');
+    // }
     axios
       .get('/send')
-      .then((response) => {
-        console.log('in cient get', response.data);
+      .then((day) => {
+        console.log('in client get', day.data);
+        if (day.data === 0) {
+          this.sendEmail();
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -44,14 +44,6 @@ class App extends Component {
       .catch((err) => {
         console.log(err);
       });
-  };
-
-  addThursdayCounter = (event) => {
-    this.setState({ thursdayCounter: this.state.thursdayCounter + 1 });
-  };
-
-  resetCounter = (event) => {
-    this.setState({ thursdayCounter: 0 });
   };
 
   handleInputChangeFor = (propertyName) => (event) => {
@@ -83,8 +75,6 @@ class App extends Component {
         </p>
         <button onClick={this.sendEmail}>Send Email</button>
         <button onClick={this.addEmail}>Add Email</button>
-        <button onClick={this.addThursdayCounter}>Add Counter</button>
-        <button onClick={this.resetCounter}>Reset</button>
       </div>
     );
   }

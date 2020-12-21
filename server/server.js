@@ -12,7 +12,6 @@ app.use(express.static('build'));
 
 //**----------Express Routes---------**//
 const emailRouter = require('./routes/email.router.js');
-let thursdayCounter = 0;
 app.use('/send', emailRouter);
 
 //**----------Start Server---------**//

@@ -6,20 +6,33 @@ let mailList = ['waywardtechbot@gmail.com'];
 let thursdayCounter = 0;
 
 router.get('/', (req, res) => {
-  res.send(thursdayCounter.toString());
-  console.log('testing', thursdayCounter);
+  // res.send(thursdayCounter.toString());
+  // if (thursdayCounter > 0) {
+  //   console.log(thursdayCounter, 'fuck');
+  // }
+  // console.log('testing', thursdayCounter);
+  // console.log(mailList);
+  if (new Date().getDay() === 0) {
+    res.send(new Date().getDay().toString());
+  }
 });
 
 router.post('/counter', (req, res) => {
-  thursdayCounter = thursdayCounter += 1;
+  //Counting Thursdays. On 1 Thursday, send email, on 0 Thursday don't send email
+  // thursdayCounter = thursdayCounter += 1;
+  // if (thursdayCounter > 1) {
+  //   thursdayCounter = 0;
+  // }
 });
 
 router.post('/add', (req, res) => {
+  //adding new email to mailing list. No database so email list dependent on server.
   mailList.push(req.body);
   console.log('in server', req.body);
   console.log('in mail list', mailList);
 });
 
+//sending emails once every other Thursday.
 router.post('/', (req, res) => {
   const transportConfig = {
     service: 'gmail',
@@ -30,7 +43,7 @@ router.post('/', (req, res) => {
   };
   let transporter = nodemailer.createTransport(transportConfig);
   let zoomLink = process.env.ZOOM;
-
+  //actual email that is sent
   const mailOptions = {
     from: process.env.EMAIL,
     to: mailList,
