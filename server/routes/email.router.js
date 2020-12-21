@@ -3,7 +3,6 @@ const nodemailer = require('nodemailer');
 const router = express.Router();
 
 let mailList = ['waywardtechbot@gmail.com'];
-let thursdayCounter = 0;
 
 router.get('/', (req, res) => {
   // res.send(thursdayCounter.toString());
@@ -33,6 +32,7 @@ router.post('/add', (req, res) => {
 });
 
 //sending emails once every other Thursday.
+
 router.post('/', (req, res) => {
   const transportConfig = {
     service: 'gmail',
