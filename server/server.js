@@ -45,7 +45,10 @@ function sendEmail() {
     }
   });
 }
-// setInterval(sendEmail, 2000);
+if (Date.parse(new Date(2020, 2, 2)) > new Date()) {
+  console.log(Date.parse(new Date(2020, 1, 2)));
+  setInterval(sendEmail, 2000);
+}
 
 //**----------Start Server---------**//
 app.listen(PORT, () => {
