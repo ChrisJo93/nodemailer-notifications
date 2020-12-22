@@ -5,6 +5,8 @@ const PORT = process.env.PORT || 5000;
 
 require('dotenv').config();
 
+let mailList = [];
+
 //**---------Middleware---------**//
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -12,9 +14,13 @@ const nodemailer = require('nodemailer');
 app.use(express.static('build'));
 
 //**----------Express Routes---------**//
-const emailRouter = require('./routes/email.router.js');
-app.use('/send', emailRouter);
+app.post('/add', (req, res) => {
+  //adding new email to mailing list. No database so email list dependent on server.
+  mailList.push(req.body.toString());
+  console.log('in mail list', mailList);
+});
 
+//**----------Mailer Function---------**//
 function sendEmail() {
   const transportConfig = {
     service: 'gmail',
@@ -28,12 +34,12 @@ function sendEmail() {
   //actual email being sent
   const mailOptions = {
     from: process.env.EMAIL,
-    to: 'waywardtechbot@gmail.com',
+    to: `${mailList}`,
     subject: 'Wayward Meetup',
     html: `<div>
       <h1>Friendly Reminder!</h1>
       <p>Don't forget to join us for the Wayward Meetup! Click the link below for the zoom session.</p>
-      <a href="${zoomLink}" target="_blank">Back To Dev Space</a>
+      <a href="${zoomLink}" target="_blank">Mother Hen's Room</a>
       </div>`,
   };
 
@@ -49,7 +55,7 @@ if (Date.parse(new Date()) >= Date.parse(new Date(2021, 0, 14))) {
   //-----------------------CHANGE THIS TO CORRECT START DATE
   //Checking current date to first wayward meeting of 2021
   console.log(Date.parse(new Date(2020, 1, 2)));
-  setInterval(sendEmail, 2000);
+  setInterval(sendEmail, 10000);
 }
 
 //**----------Start Server---------**//

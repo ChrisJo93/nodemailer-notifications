@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
+import Header from './Components/header';
+import './App.css';
+
+//-------NPM Packages------\\
+import { Button, TextField } from '@material-ui/core';
 import axios from 'axios';
-import HeaderComponent from './Components/HeaderComponent/HeaderComponent';
+import { DateTime } from 'luxon';
+import Swal from 'sweetalert2';
 
 class App extends Component {
   state = {
@@ -9,13 +15,18 @@ class App extends Component {
 
   addEmail = (event) => {
     axios
-      .post('/send/add', this.state.email)
+      .post('/add', this.state.email)
       .then((response) => {
         console.log('im a fucking boss', response);
       })
       .catch((err) => {
         console.log(err);
       });
+    Swal.fire(
+      'Thanks For Joining!',
+      'Check your email for zoom invites.',
+      'success'
+    );
   };
 
   handleInputChangeFor = (propertyName) => (event) => {
@@ -25,18 +36,23 @@ class App extends Component {
   };
 
   render() {
+    const date = DateTime.fromISO(new Date().getUTCDate());
+    const clearDate = date.toLocaleString(DateTime.DATE_FULL);
     return (
-      <div className="App">
-        <HeaderComponent />
-        <input
+      <div className="formPanel">
+        <Header />
+
+        <TextField
           onChange={this.handleInputChangeFor('email')}
           value={this.state.email}
+          label="Email"
           type="text"
-          placeholder="add email"
         />
-        <p>{new Date().toString()}</p>
-
-        <button onClick={this.addEmail}>Add Email</button>
+        <br />
+        <p>{clearDate}</p>
+        <Button variant="contained" color="primary" onClick={this.addEmail}>
+          Submit
+        </Button>
       </div>
     );
   }
