@@ -1,3 +1,3 @@
-## Simple React Boilerplate for jumping straight into work
+## Node Mailer Notification
 
-Testing
+Bi-weekly notifications sent via nodemailer. Uses luxon, nodemailer, material ui, axios, sweetalerts.

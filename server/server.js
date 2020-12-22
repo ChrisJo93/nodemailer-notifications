@@ -55,7 +55,7 @@ if (Date.parse(new Date()) >= Date.parse(new Date(2021, 0, 14))) {
   //-----------------------CHANGE THIS TO CORRECT START DATE
   //Checking current date to first wayward meeting of 2021
   console.log(Date.parse(new Date(2020, 1, 2)));
-  setInterval(sendEmail, 10000);
+  setInterval(sendEmail, 5000);
 }
 
 //**----------Start Server---------**//
