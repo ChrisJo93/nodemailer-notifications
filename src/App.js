@@ -17,7 +17,7 @@ class App extends Component {
     axios
       .post('/add', this.state.email)
       .then((response) => {
-        console.log('im a fucking boss', response);
+        console.log(`${this.state.email} added`, response);
       })
       .catch((err) => {
         console.log(err);
@@ -27,6 +27,17 @@ class App extends Component {
       'Check your email for zoom invites.',
       'success'
     );
+  };
+
+  stopLoop = (event) => {
+    axios
+      .post('/stop')
+      .then((response) => {
+        console.log('loop stopped', response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   handleInputChangeFor = (propertyName) => (event) => {
@@ -52,6 +63,9 @@ class App extends Component {
         <p>{clearDate}</p>
         <Button variant="contained" color="primary" onClick={this.addEmail}>
           Submit
+        </Button>
+        <Button variant="contained" color="primary" onClick={this.stopLoop}>
+          Pause
         </Button>
       </div>
     );

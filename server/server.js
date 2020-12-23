@@ -10,14 +10,19 @@ let mailList = [];
 //**---------Middleware---------**//
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-const nodemailer = require('nodemailer');
 app.use(express.static('build'));
+const nodemailer = require('nodemailer');
 
 //**----------Express Routes---------**//
 app.post('/add', (req, res) => {
   //adding new email to mailing list. No database so email list dependent on server.
   mailList.push(req.body.toString());
   console.log('in mail list', mailList);
+});
+
+app.post('/stop', (req, res) => {
+  console.log('in clear');
+  clearInterval(sendEmail);
 });
 
 //**----------Mailer Function---------**//
