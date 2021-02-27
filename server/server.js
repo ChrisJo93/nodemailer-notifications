@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000;
 
+//Config for environment variables
 require('dotenv').config();
 
 let mailList = [];
